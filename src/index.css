@@ -2,41 +2,76 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Entertainment Voting App Design System - Talent Show Theme */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Base colors - Dark entertainment theme */
+    --background: 240 10% 6%;
+    --foreground: 45 100% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    /* Card system - Stage lighting inspired */
+    --card: 240 8% 10%;
+    --card-foreground: 45 100% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 240 8% 10%;
+    --popover-foreground: 45 100% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary - Golden spotlight */
+    --primary: 45 93% 58%;
+    --primary-foreground: 240 10% 6%;
+    --primary-glow: 45 100% 70%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary - Stage purple */
+    --secondary: 260 60% 45%;
+    --secondary-foreground: 45 100% 96%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Muted - Subtle stage elements */
+    --muted: 240 6% 20%;
+    --muted-foreground: 240 10% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* Accent - Electric blue for interaction */
+    --accent: 220 90% 60%;
+    --accent-foreground: 240 10% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    /* Success - Winner green */
+    --success: 142 76% 36%;
+    --success-foreground: 45 100% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    /* Warning - Vote limit orange */
+    --warning: 38 92% 50%;
+    --warning-foreground: 240 10% 6%;
 
-    --radius: 0.5rem;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 45 100% 96%;
+
+    --border: 240 6% 20%;
+    --input: 240 6% 15%;
+    --ring: 45 93% 58%;
+
+    --radius: 0.75rem;
+
+    /* Entertainment specific tokens */
+    --stage-glow: 45 100% 70%;
+    --spotlight: 45 93% 58%;
+    --audience: 240 8% 10%;
+    --voting-active: 220 90% 60%;
+    --vote-disabled: 240 6% 35%;
+
+    /* Gradients */
+    --gradient-stage: linear-gradient(135deg, hsl(260 60% 45%), hsl(220 90% 60%));
+    --gradient-spotlight: linear-gradient(180deg, hsl(45 93% 58%), hsl(45 100% 70%));
+    --gradient-card: linear-gradient(180deg, hsl(240 8% 12%), hsl(240 6% 8%));
+    --gradient-vote: linear-gradient(135deg, hsl(220 90% 60%), hsl(260 60% 45%));
+
+    /* Shadows */
+    --shadow-stage: 0 20px 50px -20px hsl(45 93% 58% / 0.3);
+    --shadow-card: 0 10px 30px -10px hsl(240 10% 0% / 0.5);
+    --shadow-glow: 0 0 40px hsl(45 100% 70% / 0.4);
+
+    /* Animations */
+    --transition-vote: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
