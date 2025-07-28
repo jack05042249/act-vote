@@ -1,5 +1,6 @@
 import { useState, useCallback, useEffect } from 'react';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 export interface Contestant {
   id: string;
@@ -62,6 +63,16 @@ export const useVoting = (contestants: Contestant[]) => {
     }));
   }, [votingState]);
 
+  // Generate a unique session ID for this browser session
+  const getSessionId = useCallback(() => {
+    let sessionId = localStorage.getItem('voting-session-id');
+    if (!sessionId) {
+      sessionId = crypto.randomUUID();
+      localStorage.setItem('voting-session-id', sessionId);
+    }
+    return sessionId;
+  }, []);
+
   const castVote = useCallback(async (contestantId: string) => {
     if (!votingState.isVotingActive) {
       toast({
@@ -93,8 +104,27 @@ export const useVoting = (contestants: Contestant[]) => {
     setIsLoading(true);
 
     try {
-      // Simulate API call delay
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const sessionId = getSessionId();
+      
+      // Insert vote into Supabase
+      const { error } = await supabase
+        .from('votes')
+        .insert({
+          contestant_id: contestantId,
+          voter_session: sessionId
+        });
+
+      if (error) {
+        if (error.code === '23505') { // Unique constraint violation
+          toast({
+            title: "Already Voted",
+            description: "You've already cast your vote for this round.",
+            variant: "destructive",
+          });
+          return false;
+        }
+        throw error;
+      }
 
       // Update local vote count
       setContestantVotes(prev => ({
@@ -128,7 +158,7 @@ export const useVoting = (contestants: Contestant[]) => {
     } finally {
       setIsLoading(false);
     }
-  }, [votingState, contestants, saveVotingState]);
+  }, [votingState, contestants, saveVotingState, getSessionId]);
 
   const getContestantVoteCount = useCallback((contestantId: string) => {
     return contestantVotes[contestantId] || 0;
